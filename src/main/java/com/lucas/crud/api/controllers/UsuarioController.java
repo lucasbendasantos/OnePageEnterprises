@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.lucas.crud.api.responses.Response;
 import com.lucas.crud.api.services.UsuarioService;
 
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path="/api/usuarios")
 public class UsuarioController {
@@ -65,5 +66,15 @@ public class UsuarioController {
 	public ResponseEntity<Response<String>> remover(@PathVariable(name = "id") String id){
 		this.usarioService.remover(id);
 		return ResponseEntity.ok(new Response<String>("Usuário Removido com sucesso !"));
+	}
+	
+	@PostMapping(path="/validar")
+	public ResponseEntity<Response<Usuario>> validar(@Valid @RequestBody Usuario usuario, BindingResult result){
+		if(result.hasErrors()) {
+			List<String> erros = new ArrayList<String>();
+			result.getAllErrors().forEach(erro -> erros.add(erro.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(new Response<Usuario>(erros));
+		}
+		return ResponseEntity.ok(new Response<Usuario>(this.usarioService.validarUsuarioLogado(usuario.getNome(), usuario.getSenha())));
 	}
 }

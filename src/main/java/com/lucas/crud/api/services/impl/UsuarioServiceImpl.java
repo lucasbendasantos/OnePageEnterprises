@@ -36,5 +36,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void remover(String id) {
 		this.usuarioRepository.delete(id);
 	}
+	
+	@Override
+	public Usuario validarUsuarioLogado(String nome, String senha) {
+		Usuario x = this.usuarioRepository.validaUsuario(nome, senha);
+		return x;
+	}
 
 }

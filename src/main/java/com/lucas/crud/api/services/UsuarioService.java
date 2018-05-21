@@ -11,5 +11,7 @@ public interface UsuarioService {
 	Usuario cadastrar(Usuario usuario);
 	Usuario atualizar(Usuario usuario);
 	void remover(String id);
+	
+	Usuario validarUsuarioLogado(String nome, String senha);
 
 }
