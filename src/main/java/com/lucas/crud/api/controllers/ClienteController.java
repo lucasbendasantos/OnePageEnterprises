@@ -31,6 +31,7 @@ public class ClienteController {
 	@GetMapping
 	public ResponseEntity<Response<List<Cliente>>> listarTodos() {
 		return ResponseEntity.ok(new Response<List<Cliente>>(this.clienteService.listarTodos()));
+		
 	}
 	
 	@GetMapping(path = "/{id}")
