@@ -50,7 +50,7 @@ public class ComentarioController {
 		return ResponseEntity.ok(new Response<Comentario>(this.comentarioService.cadastrar(comentario)));
 	}
 	
-	@PutMapping
+	@PutMapping(path = "/{id}")
 	public ResponseEntity<Response<Comentario>> atualizar(@PathVariable(name = "id") String id ,@Valid @RequestBody Comentario comentario, BindingResult result){
 		if(result.hasErrors()) {
 			List<String> erros = new ArrayList<String>();
